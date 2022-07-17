@@ -5,6 +5,8 @@
     <p>price: {{ product.price }}</p>
     <p>UPC: {{ product.upc }}</p>
 
+    <p><a href="{% url 'product_edit' product.pk %}">+ Edit Blog Post</a></p>
+    <p><a href="{% url 'product_delete' product.pk %}">- Delete Blog Post</a></p>
 </div>
 {% endblock content %}
 

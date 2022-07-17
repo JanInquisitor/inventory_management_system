@@ -35,7 +35,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # "storages.apps.StoragesConfig",
+
+    "accounts.apps.AccountsConfig",
+    "pages.apps.PagesConfig",
     'storages',
 
     # third-party
@@ -101,8 +103,9 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 # Authorization
-
-# AUTH_USER_MODEL = "storages.CustomUser"
+AUTH_USER_MODEL = "accounts.CustomUser"
+LOGIN_REDIRECT_URL = "home"
+LOGOUT_REDIRECT_URL = "home"
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
