@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Companies Available</h1>
+<p><a href="{% url 'company_new' %}">Add new company</a></p>
+{% for company in company_list %}
+<h2>{{ company.name }}</h2>
+<p>Storages: {{ company.storage }}</p>
+{% endfor %}
+{% endblock content %}

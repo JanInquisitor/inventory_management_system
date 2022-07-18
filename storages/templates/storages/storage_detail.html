@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="post-entry">
+    <h2>{{ storage.name }}</h2>
+    <p>company: {{ storage.company }}</p>
+
+    <p><a href="{% url 'storage_edit' storage.pk %}">+ Edit Storage</a></p>
+    <p><a href="{% url 'storage_delete' storage.pk %}">- Delete Storage</a></p>
+</div>
+{% endblock content %}
+

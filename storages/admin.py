@@ -4,7 +4,7 @@ from storages.models import Product, Storage, Company
 
 class CompanyAdmin(admin.ModelAdmin):
     list_display = [('name')]
-    search_fields = [('name')]
+    search_fields = [('name',)]
 
 
 class StorageAdmin(admin.ModelAdmin):

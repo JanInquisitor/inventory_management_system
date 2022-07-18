@@ -4,14 +4,6 @@ from django.utils import timezone
 from django.contrib.auth.models import AbstractUser
 from taggit.managers import TaggableManager
 
-# class CustomUser(AbstractUser):
-#     ROLES = [
-#         ('OWNER', 'owner'),
-#         ('MANAGER', 'manager'),
-#         ('EMPLOYEE', 'employee')
-#     ]
-#     # role
-
 
 class Company(models.Model):
     """The company that owns and manage the storages and users."""
@@ -31,7 +23,7 @@ class Storage(models.Model):
 class Product(models.Model):
     """A finished product."""
     name = models.CharField(max_length=70, help_text="Name of the product.")
-    price = models.DecimalField(max_digits=8, decimal_places=2, blank=True, verbose_name="Price of the product.")
+    price = models.DecimalField(max_digits=8, decimal_places=2, blank=True, help_text="Price of the product.")
     description = models.TextField(blank=True, null=True)
     upc = models.CharField(max_length=12, help_text="Universal product code of this product.")
     quantity = models.IntegerField(default=0, verbose_name="The available quantity of the product.")
