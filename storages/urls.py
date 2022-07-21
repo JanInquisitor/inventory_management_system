@@ -10,14 +10,17 @@ from .views import (
     StorageDetailView,
     StorageListView,
     ProductListView,
-    AboutPageView,
-    HomePageView,
     testing_func,
     CompanyCreateView,
-    CompanyListView
+    CompanyListView,
 )
 
+app_name = 'storages'
+
 urlpatterns = [
+    # dynamic urls
+
+    # fixed urls
     path("product/<int:pk>/edit/", ProductUpdateView.as_view(), name="product_edit"),
     path("storage/<int:pk>/edit", StorageUpdateView.as_view(), name="storage_edit"),
     path("product/<int:pk>/delete/", ProductDeleteView.as_view(), name="product_delete"),
@@ -30,7 +33,5 @@ urlpatterns = [
     path("company/", CompanyListView.as_view(), name="company_list"),
     path("storage/", StorageListView.as_view(), name="storage_list"),
     path("catalog/", ProductListView.as_view(), name="product_list"),
-    path("about/", AboutPageView.as_view(), name="about"),
     path("test/", testing_func),
-    path("", HomePageView.as_view(), name="home"),
 ]

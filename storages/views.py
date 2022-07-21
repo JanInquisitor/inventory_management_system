@@ -2,64 +2,10 @@ from django.views.generic import TemplateView, ListView, DetailView, CreateView,
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.http import HttpRequest, HttpResponse
 from django.urls import reverse_lazy
+from django.views.generic.base import ContextMixin, View
+from django.views.generic.edit import ModelFormMixin
 
-from .forms import StorageForm
 from .models import Company, Storage, Product
-
-
-class HomePageView(TemplateView):
-    template_name = "storages/home.html"
-
-    def get_context_data(self, **kwargs):  # new
-        context = super().get_context_data(**kwargs)
-        return context
-
-
-class AboutPageView(TemplateView):
-    template_name = "storages/about.html"
-
-
-class ProductListView(LoginRequiredMixin, ListView):
-    model = Product
-    template_name = 'storages/product_list.html'
-
-
-class ProductDetailView(DetailView):
-    model = Product
-    template_name = 'storages/product_detail.html'
-
-
-class ProductCreateView(LoginRequiredMixin, CreateView, FormView):
-    model = Product
-    template_name = 'storages/product_create.html'
-    fields = ['name', 'price', 'upc', 'tags', 'quantity']
-
-    # Ok, entonces despues el formulario esta validado puedo modificar los atributos y los datos que contiene anttes de
-    # llamar el metodo super y guardarlo.
-    # def form_valid(self, form):
-    #     # form.instance.author = self.request.user   / Tengo esto aqui como referencia
-    #     form.instance.storage = self.request.storage = Storage()
-    #     return super().form_valid(form)
-
-
-class ProductUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
-    model = Product
-    template_name = 'storages/product_edit.html'
-    fields = ['name', 'price', 'upc', 'tags', 'quantity']
-
-    def test_func(self):
-        obj = self.get_object()
-        return obj.author == self.request.user
-
-
-class ProductDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
-    model = Product
-    template_name = 'storages/product_delete.html'
-    success_url = reverse_lazy('home')
-
-    def test_func(self):
-        obj = self.get_object()
-        return obj.author == self.request.user
 
 
 class StorageCreateView(LoginRequiredMixin, CreateView):
@@ -91,6 +37,59 @@ class StorageDeleteView(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy('storage_list')
 
 
+# NOTE: I could check with this view a `selected` storage or something like that...
+class ProductListView(LoginRequiredMixin, ListView):
+    model = Product
+    template_name = 'storages/product_list.html'
+
+    def get_queryset(self):
+        return Product.objects.all()
+
+
+class ProductDetailView(DetailView):
+    model = Product
+    template_name = 'storages/product_detail.html'
+
+
+class ProductCreateView(LoginRequiredMixin, CreateView):
+    model = Product
+    template_name = 'storages/product_create.html'
+    fields = ['name', 'price', 'upc', 'tags', 'quantity']
+
+    # def get_form_kwargs(self):
+    #     kw = super(ProductCreateView, self).get_form_kwargs()
+    #     kw['request'] = self.request
+    #     print(kw)
+    #     return kw
+
+    # Ok, entonces despues el formulario esta validado puedo modificar los atributos y los datos que contiene anttes de
+    # llamar el metodo super y guardarlo.
+    # def form_valid(self, form):
+    #     # form.instance.author = self.request.user   / Tengo esto aqui como referencia
+    #     form.instance.storage = self.request.storage = Storage()
+    #     return super().form_valid(form)
+
+
+class ProductUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Product
+    template_name = 'storages/product_edit.html'
+    fields = ['name', 'price', 'upc', 'tags', 'quantity']
+
+    def test_func(self):
+        obj = self.get_object()
+        return obj.author == self.request.user
+
+
+class ProductDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Product
+    template_name = 'storages/product_delete.html'
+    success_url = reverse_lazy('home')
+
+    def test_func(self):
+        obj = self.get_object()
+        return obj.author == self.request.user
+
+
 class CompanyCreateView(LoginRequiredMixin, CreateView):
     model = Company
     template_name = 'storages/company_create.html'
@@ -106,6 +105,15 @@ class CompanyListView(LoginRequiredMixin, ListView):
 class CompanyDetailView(LoginRequiredMixin, DetailView):
     model = Company
     template_name = 'storages/company_detail.html'
+
+
+# ==== Test classes ====
+class SelectedStorage(ModelFormMixin, ContextMixin, View):
+
+    def get_form_kwargs(self):
+        kw = super(SelectedStorage, self).get_form_kwargs()
+        kw['request'] = self.request
+        return kw
 
 
 def testing_func(req):

@@ -9,11 +9,25 @@
 <header>
     {# Navigation bar #}
     <nav>
-        <a href="{% url 'home' %}">Home</a> |
-        <a href="{% url 'about' %}">About</a> |
-        <a href="{% url 'product_list' %}">Products</a> |
-        <a href="{% url 'storage_list' %}">Storages</a> |
-{#        <a href="{% url 'company_list' %}">Company</a> |#}
+        <a href="{% url 'pages:home' %}">Home</a> |
+        <a href="{% url 'pages:about' %}">About</a> |
+        <a href="{% url 'storages:product_list' %}">Products</a> |
+        <a href="{% url 'storages:storage_list' %}">Storages</a> |
+        {#        <a href="{% url 'company_list' %}">Company</a> |#}
+{#        <select name="cars" id="cars">#}
+{#            <option value="option1">#}
+{#                <a href="">option 1</a>#}
+{#            </option>#}
+{#            <option value="option2">#}
+{#                <a href="">option 2</a>#}
+{#            </option>#}
+{#            <option value="option3">#}
+{#                <a href="">option 3</a>#}
+{#            </option>#}
+{#            <option value="option4">#}
+{#                <a href="">option 4</a>#}
+{#            </option>#}
+{#        </select>#}
     </nav>
 
 </header>

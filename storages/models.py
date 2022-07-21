@@ -4,17 +4,20 @@ from django.utils import timezone
 from django.contrib.auth.models import AbstractUser
 from taggit.managers import TaggableManager
 
+from accounts.models import CustomUser
+
 
 class Company(models.Model):
     """The company that owns and manage the storages and users."""
     name = models.CharField(max_length=50, null=False, help_text="Name of the company.")
-    # owner = models.OneToOneField(User, on_delete=models.CASCADE, help_text="Owner user of the company.")
+    owner = models.OneToOneField(CustomUser, on_delete=models.CASCADE, help_text="Owner user of the company.")
 
 
 class Storage(models.Model):
     """A storage unit, can be also either a store or a factory."""
-    name = models.CharField(max_length=50, null=False, help_text="Name of the storage.")
+    name = models.CharField(max_length=50, unique=True, null=False, help_text="Name of the storage.")
     company = models.ForeignKey(Company, on_delete=models.CASCADE)
+    # slug = models.SlugField()
 
     def __str__(self):
         return self.name
@@ -29,6 +32,7 @@ class Product(models.Model):
     quantity = models.IntegerField(default=0, verbose_name="The available quantity of the product.")
     date = models.DateTimeField(default=timezone.now)
     storage = models.ForeignKey(Storage, on_delete=models.CASCADE)
+    # slug = models.SlugField()
     tags = TaggableManager()
 
     # manufacturer

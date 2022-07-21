@@ -5,6 +5,6 @@
 <p><a href="{% url 'storage_new' %}">Add new storage</a></p>
 {% for storage in storage_list %}
 <h2><a href="{% url 'storage_detail' storage.pk %}">{{ storage.name }}</a></h2>
-<p>{{ storage.company }}</p>
+<!--<p>{{ storage.company }}</p>-->
 {% endfor %}
 {% endblock content %}
