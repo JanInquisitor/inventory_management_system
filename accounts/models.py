@@ -3,8 +3,17 @@ from django.db import models
 
 
 class CustomUser(AbstractUser):
+    MANAGER = 1
+    EMPLOYEE = 2
+
+    # Should probably make an enum or something.
+    ROLE_CHOICES = (
+        (MANAGER, 'Manager'),
+        (EMPLOYEE, 'Employee')
+    )
+
     age = models.PositiveIntegerField(null=True, blank=True)
-    # roles (manager, employee, admin). Most likely need to update the default model user for that.
+    role = models.PositiveSmallIntegerField(choices=ROLE_CHOICES, blank=True, null=True)
 
 
 class UserProfile(models.Model):

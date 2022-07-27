@@ -116,5 +116,6 @@ class SelectedStorage(ModelFormMixin, ContextMixin, View):
         return kw
 
 
-def testing_func(req):
+def testing_func(request, storage, **kwargs):
+    print(storage)
     return HttpResponse("It worked.")
