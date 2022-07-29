@@ -13,8 +13,12 @@ import os
 import environ
 from pathlib import Path
 
+# To run locally must export .env for example:
+# export READ_DOT_ENV_FILE=True
 env = environ.Env(DEBUG=(bool, False))
-environ.Env.read_env()
+READ_DOT_ENV_FILE = env.bool('READ_DOT_ENV_FILE', default=False)
+if READ_DOT_ENV_FILE:
+    environ.Env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -108,8 +112,8 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Authorization
 AUTH_USER_MODEL = "accounts.CustomUser"
-LOGIN_REDIRECT_URL = "home"
-LOGOUT_REDIRECT_URL = "home"
+LOGIN_REDIRECT_URL = "pages:home"
+LOGOUT_REDIRECT_URL = "pages:home"
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
